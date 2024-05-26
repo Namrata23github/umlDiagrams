@@ -1,0 +1,25 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+
+autonumber
+actor user as user
+Participant Application as Application
+Participant Authorization_Server as Authorization_Server
+Participant Resource_Server as Resource_Server
+
+
+
+user -> Application : want to give resource access
+Application -> Authorization_Server : /authorize ask for authorisation request
+Authorization_Server -> user : prompts the user for authentication and consent
+user -> Authorization_Server : Login credentials and provide consent
+Authorization_Server -> Application : Redirects to application with authorisation code
+Application -> Authorization_Server : Asks for token by providing authorisation code and code verifier
+Authorization_Server -> Application :  responds with an access token (and optionally a refresh token).
+Application -> Resource_Server : calls the resource server (API), using the access token.
+
+
+
+
+@enduml
